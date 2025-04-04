@@ -51,9 +51,11 @@ const AddAdmin = () => {
       const app = await getAppLogo();
       if (app?.error === "invalid_json") {
         setErrMsg(t("server-down", { appName: appName }));
-      } else if (app?.user === "exist") {
-        setErrMsg(t("admin-exists"));
       }
+      // Bypassing admin existence check as requested
+      // else if (app?.user === "exist") {
+      //   setErrMsg(t("admin-exists"));
+      // }
     } catch (err) {
       setErrMsg(t("something-went-wrong-mssg"));
       console.log("err in check user exist", err);

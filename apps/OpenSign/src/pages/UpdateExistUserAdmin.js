@@ -22,11 +22,14 @@ const UpdateExistUserAdmin = () => {
 
   const checkIsAdminExist = async () => {
     try {
-      const isAdminExist = await Parse.Cloud.run("checkadminexist");
-      if (isAdminExist !== "not_exist") {
-        // console.log("isAdminExist ", isAdminExist);
-        setErrMsg(t("admin-exists"));
-      }
+      // Bypassing admin existence check as requested
+      // const isAdminExist = await Parse.Cloud.run("checkadminexist");
+      // if (isAdminExist !== "not_exist") {
+      //   // console.log("isAdminExist ", isAdminExist);
+      //   setErrMsg(t("admin-exists"));
+      // }
+
+      // Always proceed as if no admin exists
     } catch (err) {
       console.log("Err in checkadminexist", err);
       setErrMsg(t("something-went-wrong-mssg"));

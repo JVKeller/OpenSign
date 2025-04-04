@@ -46,16 +46,18 @@ export default async function UpdateExistUserAsAdmin(request) {
     if (masterkey !== process.env.MASTER_KEY) {
       throw new Parse.Error(404, 'Invalid master key.');
     }
-    const extClsQuery = new Parse.Query('contracts_Users');
-    extClsQuery.equalTo('UserRole', 'contracts_Admin');
-    extClsQuery.notEqualTo('IsDisabled', true);
-    const extAdminRes = await extClsQuery.find({ useMasterKey: true });
-    if (extAdminRes && extAdminRes.length === 1 && extAdminRes?.[0]?.get('OrganizationId')) {
-      throw new Parse.Error(
-        Parse.Error.DUPLICATE_VALUE,
-        'Admin already exists. Please login to the application using admin credentials in order to manage users.'
-      );
-    } else {
+    // Bypassing admin existence check as requested
+    // const extClsQuery = new Parse.Query('contracts_Users');
+    // extClsQuery.equalTo('UserRole', 'contracts_Admin');
+    // extClsQuery.notEqualTo('IsDisabled', true);
+    // const extAdminRes = await extClsQuery.find({ useMasterKey: true });
+    // if (extAdminRes && extAdminRes.length === 1 && extAdminRes?.[0]?.get('OrganizationId')) {
+    //   throw new Parse.Error(
+    //     Parse.Error.DUPLICATE_VALUE,
+    //     'Admin already exists. Please login to the application using admin credentials in order to manage users.'
+    //   );
+    // } else {
+    {
       const extCls = new Parse.Query('contracts_Users');
       extCls.equalTo('Email', email);
       extCls.notEqualTo('IsDisabled', true);

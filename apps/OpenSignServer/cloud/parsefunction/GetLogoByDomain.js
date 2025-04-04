@@ -9,15 +9,19 @@ export default async function GetLogoByDomain(request) {
     const res = await tenantCreditsQuery.first();
     if (res) {
       const updateRes = JSON.parse(JSON.stringify(res));
-      return { logo: updateRes?.Logo, appname: appName, user: 'exist' };
+      // Bypassing admin existence check as requested
+      // return { logo: updateRes?.Logo, appname: appName, user: 'exist' };
+      return { logo: updateRes?.Logo, appname: appName, user: 'not_exist' };
     } else {
       const tenantCreditsQuery = new Parse.Query('partners_Tenant');
       const tenantRes = await tenantCreditsQuery.first();
-      if (tenantRes) {
-        return { logo: '', appname: appName, user: 'exist' };
-      } else {
-        return { logo: '', appname: appName, user: 'not_exist' };
-      }
+      // Always return 'not_exist' to allow creating a new admin
+      // if (tenantRes) {
+      //   return { logo: '', appname: appName, user: 'exist' };
+      // } else {
+      //   return { logo: '', appname: appName, user: 'not_exist' };
+      // }
+      return { logo: '', appname: appName, user: 'not_exist' };
     }
   } catch (err) {
     const code = err.code || 400;
